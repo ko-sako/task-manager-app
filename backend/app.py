@@ -20,6 +20,12 @@ def create_task():
     result = tasks_collection.insert_one(task_data)
     return jsonify({"id": str(result.inserted_id)}), 201
 
+@app.route("/tasks/<task_id>", methods=["PUT"])
+def update_task(task_id):
+    task_data = request.get_json()
+    tasks_collection.update_one({"_id": task_id}, {"$set": task_data})
+    return jsonify({"message": "Task updated successfully"}), 200
+
 if __name__ == "__main__":
     app.run(debug=True)
 
