@@ -26,6 +26,11 @@ def update_task(task_id):
     tasks_collection.update_one({"_id": task_id}, {"$set": task_data})
     return jsonify({"message": "Task updated successfully"}), 200
 
+@app.route("/tasks/<task_id>", methods=["DELETE"])
+def delete_task(task_id):
+    tasks_collection.delete_one({"_id": task_id})
+    return jsonify({"message": "Task deleted successfully"}), 200
+
 if __name__ == "__main__":
     app.run(debug=True)
 
