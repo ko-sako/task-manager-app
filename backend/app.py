@@ -14,6 +14,12 @@ def get_tasks():
         task["_id"] = str(task["_id"])
     return jsonify(tasks)
 
+@app.route("/tasks", methods=["POST"])
+def create_task():
+    task_data = request.get_json()
+    result = tasks_collection.insert_one(task_data)
+    return jsonify({"id": str(result.inserted_id)}), 201
+
 if __name__ == "__main__":
     app.run(debug=True)
 
