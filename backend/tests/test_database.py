@@ -13,3 +13,13 @@ def test_get_task_by_id():
     retrived_task = tasks_collection.find_one({"_id": task_id})
     assert retrived_task is not None
     assert retrived_task["title"] == "Get Task Test"
+
+def test_update_task():
+    task = {"title": "Update Task Test", "done": False}
+    result = tasks_collection.insert_one(task)
+    task_id = result.inserted_id
+
+    tasks_collection.update_one({"_id": task_id}, {"$set": {"done": True}})
+    updated_task = tasks_collection.find_one({"_id": task_id})
+
+    assert updated_task["done"] is True
